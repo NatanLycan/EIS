@@ -117,21 +117,20 @@
                         <div class="col-md-10">                           
                             <input type='nombre' class='form-control' placeholder="Cryptography's exam answers">
                         </div>
-                        <br>
-                        <br>
-                        <br>
+                </div>
+                <div class="form-group">
                         <label  for="" class="control-label col-md-2">Load file</label>
                         <div class="col-md-10">                          
                             <input type="file" name="archivo" class="campo-boton4">
                         </div>
-                        <br>
-                        <br>
-                        <br>
+                </div>
+                <div class="form-group">
                         <label  for="" class="control-label col-md-2">Private key</label>
                         <div class="col-md-10">                          
                             <input type="file" name="archivo" class="campo-boton4">
                         </div>
-                        <br><br><br><br><br>                                               
+                </div>     
+                <div class="form-group" >
                         <div class="form-group text-right">
                             <div class="col-md-8 col-md-offset-4">
                                 <a class="btn btn-success" style="width: 150px;" onclick="enviarForm();">CONTINUE</a>
