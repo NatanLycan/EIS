@@ -85,7 +85,7 @@
 									<span><img src="./IMG/encrypt.png" height="36px"></span>
 									Encrypt
 									</a></li>
-								<li><a href="./Vista/SolicitudesCita.php">
+								<li><a href="./Vista/Pdfario.php">
 									<span><img src="./IMG/pdfario.png" height="36px"></span>
 									PDFario
 									</a></li>
