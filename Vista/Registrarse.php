@@ -104,61 +104,94 @@
                 </div>
             </div>
         </nav>
-        
+
 
         <!-- contenido ------------------------------------------------------------------------------------------>
         <div style="padding-bottom: 57px;" id="main-content" class="container-fluid col-md-offset-1 col-md-10">
             <h2><p><strong>Create an account</strong></p></h2>
             <br><br>
-            <form action="" class="form-horizontal">
-                <div class="form-group">
+            <form action="POST" class="form-horizontal">
+                <div class="form-group" id="Nombre">
                     <label  for="" class="control-label col-md-2">Name(s)</label>
                     <div class="col-md-10">
-
-                        <input type='nombre' class='form-control' placeholder="Pancho">
+                        <input type='nombre' name='nombre' class='form-control' placeholder="Pancho">
+                        <span id="nombre01" class="hidden glyphicon form-control-feedback"></span>
+                        <span id="nombre02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="appaterno">
                     <label  for="" class="control-label col-md-2">First name</label>
                     <div class="col-md-10">
-
-                        <input type='appaterno' class='form-control' placeholder="Perez">
+                        <input type='appaterno' name="appaterno" class='form-control' placeholder="Perez">
+                        <span id="appaterno01" class="hidden glyphicon form-control-feedback"></span>
+                        <span id="appaterno02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="Correo">
                     <label  for="" class="control-label col-md-2">E-mail</label>
                     <div class="col-md-10">
-
-                        <input type='correo' class='form-control' placeholder="example@domain.com">
+                        <input type='correo' name="correo" class='form-control' placeholder="example@domain.com">
+                        <span id="correo01" class="hidden glyphicon form-control-feedback"></span>
+                        <span id="correo02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="Pass">
                     <label  for="" class="control-label col-md-2">Password</label>
                     <div class="col-md-10">
-
-                        <input type='password' class='form-control' placeholder="***************">
+                        <input type='password' name="pass" class='form-control' placeholder="***************">
+                        <span id="pass01" class="hidden glyphicon form-control-feedback"></span>
+                        <span id="pass02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="Repass">
                     <label  for="" class="control-label col-md-2">Confirm password</label>
                     <div class="col-md-10">
-
-                        <input type='password' class='form-control' placeholder="***************">
+                        <input type='password' name="repass" class='form-control' placeholder="***************">
+                        <span id="repass01" class="hidden glyphicon form-control-feedback"></span>
+                        <span id="repass02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="Key">
                     <label  for="" class="control-label col-md-2">Public key</label>
                     <div class="col-md-10">                          
-                        <input type="file" name="archivo" class="campo-boton4">
+                        <input type="file" name="key" class="campo-boton4">
+                        <span id="key01" class="hidden glyphicon form-control-feedback"></span>
+                        <span id="key02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
                 <div class="form-group">                                              
                     <div class="form-group text-right">
                         <div class="col-md-8 col-md-offset-4">
-                            <a class="btn btn-success" style="width: 150px;" onclick="enviarForm();">CONTINUE</a>
+                            <a class='btn btn-success' style='width: 150px; cursor: pointer;' onclick='enviarForm();'>CONTINUE</a>
                         </div>
                     </div>
                 </div>
+                <script>
+                    function enviarForm(){
+                        var nombres = false, correos = false,depas = false;  
+                        //var nombrearea = $("[name='nombrearea']").val();
+                        var nombre = $("[name='nombre']").val();
+                        var appaterno = $("[name='appaterno']").val();
+                        var c1 = $("[name='correo']").val();
+                        var pass = $("[name='pass']").val();
+                        var repass = $("[name='repass']").val();
+                        var key = $("[name='key']").val();
+
+                        // Validando el nombre,apellido paterno y materno                
+                        if (nombre == "" ) {
+                            $("#Nombre").attr("class", "form-group has-feedback has-error");
+                            $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#nombre02").removeClass("hidden");
+                            $("#nombre02").text("El campo nombre no puede estar vacío.");
+                            nombres = false;
+                        }else if(!valname(nombre)){
+                            $("#Nombre").attr("class", "form-group has-feedback has-error");
+                            $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#nombre02").removeClass("hidden");
+                            $("#nombre02").text("El formato del campo nombre  es incorrecto.");                                
+                            nombres = false;
+                        }
+                </script>					   
             </form>
         </div>
 
