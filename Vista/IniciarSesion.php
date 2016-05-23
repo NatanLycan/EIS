@@ -24,7 +24,7 @@
 			<div class="container-fluid" style="padding-left:51px; padding-right:51px;">
 				<div class="navbar-header">
 					<a class="navbar-brand" href=".">
-						<img id="logoSGCE" src="../Img/escomGris.png" width="80px">
+						<img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
 					</a>
 					<div style="padding-top:33px;">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-bar" aria-expanded="false">
@@ -95,7 +95,7 @@
 						<!--  Visitante -->
 						<li class="">
 							<a href="./IniciarSesion.php">
-								<span><img src="../Img/iniciarsesion.png" height="40px"></span> Sign in
+								<span><img src="../IMG/iniciarsesion.png" height="40px"></span> Sign in
 							</a>
 						</li>
 
