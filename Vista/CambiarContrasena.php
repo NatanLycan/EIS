@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="../Scr/jquery-2.2.0.js"></script>
 		<script type="text/javascript" src="../Scr/moment.min.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap.js"></script>
+		<script type="text/javascript" src="../Scr/validator.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap-datetimepicker.js"></script>
 		<link type="text/css" rel="stylesheet" href="../CSS/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../CSS/letras.css">
@@ -24,7 +25,7 @@
 			<div class="container-fluid" style="padding-left:51px; padding-right:51px;">
 				<div class="navbar-header">
 					<a class="navbar-brand" href=".">
-						<img id="logoSGCE" src="../Img/escomGris.png" width="80px">
+						<img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
 					</a>
 					<div style="padding-top:33px;">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-bar" aria-expanded="false">
@@ -95,7 +96,7 @@
 						<!--  Visitante -->
 						<li class="">
 							<a href="./IniciarSesion.php">
-								<span><img src="../Img/iniciarsesion.png" height="40px"></span> Sign in
+								<span><img src="../IMG/iniciarsesion.png" height="40px"></span> Sign in
 							</a>
 						</li>
 
@@ -115,33 +116,143 @@
                 <div class="form-group" id="Vieja">
 						<label  for="" class="control-label col-md-2">Current password</label>
 						<div class="col-md-10">
-							<input type="password" id="vieja" class="form-control" name="passold" placeholder="*************************" >
+                            <input type='password' name="vieja" class='form-control' placeholder="***************">
+                            <span id="vieja01" class="hidden glyphicon form-control-feedback"></span>
+                            <span id="vieja02" class="text-center help-block hidden"></span>
 						</div>
-					</div>
-					<div class="form-group" id="Nueva01">
+				</div>
+				<div class="form-group" id="Nueva01">
 						<label  for="" class="control-label col-md-2">New password</label>
 						<div class="col-md-10">
-							<input type="password" id="nueva01" class="form-control" placeholder="*************************" >
-							<span id="pass01" class=""></span>
+                            <input type='password' name="nueva01" class='form-control' placeholder="***************">
+                            <span id="nva01" class="hidden glyphicon form-control-feedback"></span>
+                            <span id="nva02" class="text-center help-block hidden"></span>
 						</div>
-					</div>
+				</div>
 					<div class="form-group" id="Nueva02">
 						<label  for="" class="control-label col-md-2">Confirm new password</label>
 						<div class="col-md-10">
-							<input type="password" id="nueva02" class="form-control" placeholder="*************************" >
-							<span id="pass02" class=""></span>
-							<span id="pass03" class="text-center help-block hidden">The confirmation password does not match the password you entered.</span>
+							<input type='password' name="nueva02" class='form-control' placeholder="***************">
+                            <span id="nva03" class="hidden glyphicon form-control-feedback"></span>
+                            <span id="nva04" class="text-center help-block hidden"></span>
+							<!-- <span id="pass03" class="text-center help-block hidden">The confirmation password does not match the password you entered.</span>-->
 						</div>
 					</div>
 
 				<div class="form-group text-right">
 					<div class="col-md-10 col-md-offset-2">
 						<span class="help-block">
-							<a class="btn btn-success" style="width: 150px;" onclick="logIn();">CONTINUE</a>
+							<a class="btn btn-success" style="width: 150px;" onclick="enviarForm();">CONTINUE</a>
 						</span>
 					</div>
 				</div>
 			</form>
+            
+            <!-- JAVA SCRIPT BOTONES-->
+            <script type="text/javascript">
+                function error(donde, str) {
+					$(donde).addClass("has-error has-feedback");
+					$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					if (str != "")
+						$("#pass02").removeClass("hidden");
+					$("#pass02").text(str);
+				}
+
+				function nohayerror() {
+					$("#Vieja").removeClass("has-error has-feedback");
+                    $("#Nueva01").removeClass("has-error has-feedback");
+					$("#Nueva02").removeClass("has-error has-feedback");
+                   
+                    $("#vieja01").addClass("hidden");
+                    $("#vieja02").addClass("hidden");
+                    $("#nueva01").addClass("hidden");
+                    $("#nueva02").addClass("hidden");
+                    $("#nueva03").addClass("hidden");
+                    $("#nueva04").addClass("hidden");
+				}
+                
+				function enviarForm() {
+					var p = false, p1 = false,p2 = false;  
+                    var pass = $("[name='vieja']").val();
+                    var passn = $("[name='nueva01']").val();
+                    var passn2 = $("[name='nueva02']").val();
+                    
+                    /* REVISAR SI ALGUN CAMPO ESTA VACIO */
+                    if (pass == "") {
+						$("#Vieja").attr("class", "form-group has-error has-feedback");
+						$("#vieja01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#vieja02").removeClass("hidden");
+                        $("#vieja02").text("This field can't be empty.");
+					}else{
+                        if(!valcontra(pass)){
+                            $("#Vieja").attr("class", "form-group has-error has-feedback");
+						    $("#vieja01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#viejae02").removeClass("hidden");
+                            $("#vieja02").text("Please enter 6 or more characters. The spaces between characters will be ignored.");
+                        }else{
+                            $("#Vieja").attr("class", "form-group has-success has-feedback");
+                            $("#vieja01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#vieja02").addClass("hidden");
+                            p = true;
+                        }// else formato correcto contrasena vieja
+                    }// if vacio
+                    
+                    
+                    if (passn == "") {
+						$("#Nueva01").attr("class", "form-group has-error has-feedback");
+						$("#nva01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#nva02").removeClass("hidden");
+                        $("#nva02").text("This field can't be empty.");
+					}else{
+                        if(!valcontra(passn)){
+                            $("#Nueva01").attr("class", "form-group has-error has-feedback");
+						    $("#nva01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#nva02").removeClass("hidden");
+                            $("#nva02").text("Please enter 6 or more characters. The spaces between characters will be ignored.");
+                        }else{
+                            $("#Nueva01").attr("class", "form-group has-success has-feedback");
+                            $("#nva01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#nva02").addClass("hidden");
+                            p1 = true;
+                        }// else formato correcto contrasena nva
+                    }// if vacio
+                    
+                    if (passn2 == "") {
+						$("#Nueva02").attr("class", "form-group has-error has-feedback");
+						$("#nva03").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#nva04").removeClass("hidden");
+                        $("#nva04").text("This field can't be empty.");
+					}else{
+                        if(!valcontra(passn2)){
+                            $("#Nueva02").attr("class", "form-group has-error has-feedback");
+						    $("#nva03").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#nva04").removeClass("hidden");
+                            $("#nva04").text("Please enter 6 or more characters. The spaces between characters will be ignored.");
+                        }else{
+                            if(passn2 != passn){
+                                $("#Nueva01").attr("class", "form-group has-feedback has-error");
+                                $("#nva01").attr("class", "glyphicon glyphicon-remove form-control-feedback");;		
+                                $("#Nueva02").attr("class", "form-group has-feedback has-error");
+                                $("#nva03").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                                $("#nva04").removeClass("hidden");
+                                $("#nva04").text("Passwords don't match, please retype your password.");
+                            }else{
+                                $("#Nueva02").attr("class", "form-group has-success has-feedback");
+                                $("#nva03").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                                $("#nva04").addClass("hidden");
+                                p2 = true;
+                            }
+                        }// else formato correcto contrasena nva confirmacion
+                    }// if vacio
+                    
+                    
+                    if (p & p1 & p2){
+                        //taco :V
+				    }// si los datos del formulario son correctos  
+				}// enviarFOrm		
+			</script>
+
 		</div>
     
     

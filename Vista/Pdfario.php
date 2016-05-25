@@ -24,7 +24,7 @@
 			<div class="container-fluid" style="padding-left:51px; padding-right:51px;">
 				<div class="navbar-header">
 					<a class="navbar-brand" href=".">
-						<img id="logoSGCE" src="../Img/escomGris.png" width="80px">
+						<img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
 					</a>
 					<div style="padding-top:33px;">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-bar" aria-expanded="false">
@@ -95,7 +95,7 @@
 						<!--  Visitante -->
 						<li class="">
 							<a href="./IniciarSesion.php">
-								<span><img src="../Img/iniciarsesion.png" height="40px"></span> Sign in
+								<span><img src="../IMG/iniciarsesion.png" height="40px"></span> Sign in
 							</a>
 						</li>
 
@@ -124,16 +124,10 @@
 					</thead>
 
 					<tbody>
-						<!--  <tr>
-<th>Área A</th>
-<th>Departamento A</th>
-<th><a class=" text-success text-right"  style = "text-decoration:underline;" href="#">Editar</a></th>
-<th><a class=" text-success text-right" style = "text-decoration:underline;"  href="#">Eliminar</a></th>                                        
-</tr>-->
 						<?php
 
 						include("../Modelo/abre_conexion.php");
-						$query = "SELECT a.nombre as area,a.idarea as idarea,d.nombre as depto FROM area a, depto d WHERE idarea>0 and a.iddepto=d.iddepto ORDER BY a.nombre";
+						/*$query = "SELECT a.nombre as area,a.idarea as idarea,d.nombre as depto FROM area a, depto d WHERE idarea>0 and a.iddepto=d.iddepto ORDER BY a.nombre";
 						$result = mysqli_query($link, $query);
 
 						while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -147,15 +141,16 @@
 							echo "<th width="100px"><input  type="file" name="archivo" class="campo-boton4"></th>";   
 							echo "<th width="100px"><a class="btn btn-success" style="width: 150px;" onclick="enviarForm();">CONTINUE</a></th>  ";
 							echo "</tr>";
-						}
+						}*/
 
 						?>
 					</tbody>
 				</table>
 		
-                </form>
+                
 		</div>
-    
+    </form>
+    </div>
     
     <!-- footer ------------------------------------------------------------------------------------------>
     

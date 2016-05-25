@@ -43,6 +43,12 @@
                 <img class="img-head" src="./IMG/logoIPNGris.png" style="float:right; padding-top:10px; padding-right:15px;">
             </a>
         </div>
+        
+        
+        <!-- PHP ABRIR CONEXION CON LA BD -->
+        <?php
+		include("./Modelo/abre_conexion.php");
+		?>
 
         <nav class="navbar navbar-inverse navbar-static-top" style="height:84px;" id="top-bar">
             <div class="container-fluid" style="padding-left:51px; padding-right:51px;">
@@ -64,7 +70,7 @@
                     <ul class="nav navbar-nav navbar-right" style="padding-top:12px;">
 
                         <?php
-                        if (isset($_COOKIE["cargo"])) {
+                        if (isset($_COOKIE["sesion"])) {
                         ?>
                         
                         
@@ -75,7 +81,7 @@
                                 <span><img src="./IMG/bookmarkGreen.png" height="40px"></span> Files<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dark">
-                                <li><a href="./Vista/Calendario.php">
+                                <li><a href="./Vista/Encrypt.php">
                                     <span><img src="./IMG/encrypt.png" height="36px"></span>
                                     Encrypt
                                     </a></li>

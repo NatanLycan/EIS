@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="../Scr/jquery-2.2.0.js"></script>
 		<script type="text/javascript" src="../Scr/moment.min.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap.js"></script>
+		<script type="text/javascript" src="../Scr/validator.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap-datetimepicker.js"></script>
 		<link type="text/css" rel="stylesheet" href="../CSS/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../CSS/letras.css">
@@ -23,8 +24,8 @@
    <nav class="navbar navbar-inverse navbar-static-top" style="height:84px;" id="top-bar">
 			<div class="container-fluid" style="padding-left:51px; padding-right:51px;">
 				<div class="navbar-header">
-					<a class="navbar-brand" href=".">
-						<img id="logoSGCE" src="../Img/escomGris.png" width="80px">
+					<a class="navbar-brand" href="../index.php">
+						<img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
 					</a>
 					<div style="padding-top:33px;">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-bar" aria-expanded="false">
@@ -95,7 +96,7 @@
 						<!--  Visitante -->
 						<li class="">
 							<a href="./IniciarSesion.php">
-								<span><img src="../Img/iniciarsesion.png" height="40px"></span> Sign in
+								<span><img src="../IMG/iniciarsesion.png" height="40px"></span> Sign in
 							</a>
 						</li>
 
@@ -112,19 +113,21 @@
 			<h2><p><strong>Encrypt file</strong></p></h2>
             <br><br>
             <form action="" class="form-horizontal">
-                    <div class="form-group">
+                    <div class="form-group" id="Nombre">
                         <label  for="" class="control-label col-md-2">Title</label>
                         <div class="col-md-10">                           
-                            <input type='nombre' class='form-control' placeholder="Cryptography's exam answers">
+                            <input type='nombre' name="nombre" class='form-control' placeholder="Cryptography's exam answers">
+                            <span id="nombre01" class="hidden glyphicon form-control-feedback"></span>
+                            <span id="nombre02" class="text-center help-block hidden"></span>
                         </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="File">
                         <label  for="" class="control-label col-md-2">Load file</label>
                         <div class="col-md-10">                          
                             <input type="file" name="archivo" class="campo-boton4">
                         </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="Key">
                         <label  for="" class="control-label col-md-2">Private key</label>
                         <div class="col-md-10">                          
                             <input type="file" name="archivo" class="campo-boton4">
@@ -139,7 +142,77 @@
                     </div>
                 </form>
 		</div>
-    
+    <!-- JAVA SCRIPT BOTONES-->
+            <script type="text/javascript">
+                function error(donde, str) {
+					$(donde).addClass("has-error has-feedback");
+					$("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					if (str != "")
+						$("#pass02").removeClass("hidden");
+					$("#pass02").text(str);
+				}
+
+				function nohayerror() {
+					$("#Nombre").removeClass("has-error has-feedback");
+					
+                    $("#nombre01").addClass("hidden");
+                    $("#nombre02").addClass("hidden");
+				}
+                
+				function enviarForm() {
+					var tn = false,tk = false,tf = false;  
+                    var nombre = $("[name='nombre']").val();
+                               
+                    
+                    /* REVISAR SI ALGUN CAMPO ESTA VACIO */
+                    if (nombre == "") {
+						$("#Nombre").attr("class", "form-group has-error has-feedback");
+						$("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#nombre02").removeClass("hidden");
+                        $("#nombre02").text("This field can't be empty.");
+					}else{
+                        if(!valname(nombre)){
+                            $("#Nombre").attr("class", "form-group has-error has-feedback");
+						    $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#nombre02").removeClass("hidden");
+                            $("#nombre02").text("This field doesn't accept numbers.");
+                        }else{
+                            $("#Nombre").attr("class", "form-group has-success has-feedback");
+                            $("#nombre01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#nombre02").addClass("hidden");
+                            tn = true;
+                        }// else formato correcto nombre
+                    }// if vacio
+                    
+                    
+                    if (tn && tk && tf){
+                        
+                                $("#nombre02").removeClass("hidden");
+                                $("#nombre02").text("Validación.");
+                        
+                        
+                        
+							$.ajax({
+								url: "../Modelo/agrega_cuenta.php",
+								method: "POST",
+								data: { 
+									name: nombre,
+									appat: appaterno,
+									mail: correo,
+									p1: pass
+									//key: cargo
+								}
+							}).done(function(msg) {
+								if(msg == "Insertado") $("#exitoso").modal();
+								console.log(msg);                                
+							});   
+				    }else{
+						$(window).scrollTop(0);
+						$("#error").modal();
+				    }// si los datos del formulario son correctos  
+				}// enviarFOrm		
+			</script>
     
     <!-- footer ------------------------------------------------------------------------------------------>
     

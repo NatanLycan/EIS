@@ -7,6 +7,7 @@
 		<script type="text/javascript" src="../Scr/moment.min.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript" src="../Scr/validator.js"></script>
 		<link type="text/css" rel="stylesheet" href="../CSS/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../CSS/letras.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +24,7 @@
    <nav class="navbar navbar-inverse navbar-static-top" style="height:84px;" id="top-bar">
 			<div class="container-fluid" style="padding-left:51px; padding-right:51px;">
 				<div class="navbar-header">
-					<a class="navbar-brand" href=".">
+					<a class="navbar-brand" href="../index.php">
 						<img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
 					</a>
 					<div style="padding-top:33px;">
@@ -40,9 +41,9 @@
 					<ul class="nav navbar-nav navbar-right" style="padding-top:12px;">
 
 						<?php
-						if (isset($_COOKIE["cargo"])) {
+						if (isset($_COOKIE["sesion"])) {
 						?>
-						<?php if($_COOKIE["cargo"]==1){ ?>
+						<?php if($_COOKIE["sesion"]==1){ ?>
 
 						
 
@@ -142,7 +143,134 @@
 					</div>
 				</div>
 			</form>
+            
+            <!-- JAVA SCRIPT BOTONES-->
+            <script type="text/javascript">
+                function error(donde, str) {
+					$(donde).addClass("has-error has-feedback");
+					$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					if (str != "")
+						$("#pass02").removeClass("hidden");
+					$("#pass02").text(str);
+				}
+
+				function nohayerror() {
+					$("#contra").removeClass("has-error has-feedback");
+					$("#correo").removeClass("has-error has-feedback");
+					$("#email01").addClass("hidden");
+					$("#user01").attr("class", "hidden");
+					$("#user02").addClass("hidden");
+					$("#pass01").attr("class", "hidden");
+					$("#pass02").addClass("hidden");
+				}
+                
+				function logIn() {
+					var tm = false, tp = false;
+					var mail = $("[name='miemail']").val();
+					var ps = $("[name='mipass']").val();
+					/* REVISAR SI ALGUN CAMPO ESTA VACIO */
+                    if (mail == "") {
+						$("#correo").attr("class", "form-group has-error has-feedback");
+						$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#email02").removeClass("hidden");
+                        $("#email02").text("This field can't be empty.");
+					}else{
+                        if(!validate(mail)){
+                            $("#correo").attr("class", "form-group has-error has-feedback");
+                            $("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#email02").removeClass("hidden");
+                            $("#email02").text("Please enter a valid email. For example,  usuario@dominio.com");
+                        }else{
+                            $("#correo").attr("class", "form-group has-success has-feedback");
+                            $("#email01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#email02").addClass("hidden");
+                            tm = true;
+                        }// else formato correcto email
+                    }// if vacio
+                    
+                    if (ps == "") {
+						$("#contra").attr("class", "form-group has-error has-feedback");
+						$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#pass02").removeClass("hidden");
+                        $("#pass02").text("This field can't be empty.");
+					}else{
+                        if(!valcontra(ps)){
+                            $("#contra").attr("class", "form-group has-error has-feedback");
+                            $("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#pass02").removeClass("hidden");
+                            $("#pass02").text("Please enter 6 or more characters. The spaces between characters will be ignored.");
+                        }else{
+                            $("#contra").attr("class", "form-group has-success has-feedback");
+                            $("#pass01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#pass02").addClass("hidden");
+                            tp = true;
+                        }// else formato correcto contrasean
+                    }// if vacio
+                    
+                    if (tm && tp) logIn2();
+					else {
+						$("#error").modal();
+					}  
+                    
+				}// login()
+                
+                
+                function logIn2() {
+					var m = $("[name='miemail']").val();
+					var p = $("[name='mipass']").val();
+					$.ajax({
+						method: "POST",
+						url: "../sesion_in.php",
+						data: { miemail: m, mipass: p }
+					}).done(function(msg) {
+						if (msg == 1) {
+							$("#correo").attr("class", "form-group has-error has-feedback");
+							$("#contra").attr("class", "form-group has-error has-feedback");
+							$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+							$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+							$("#pass02").removeClass("hidden");
+							$("#pass02").text("Incorrect login details.");
+						}
+						else if (msg == 2) {
+							$("#correo").attr("class", "form-group has-error has-feedback");
+							$("#contra").attr("class", "form-group has-error has-feedback");
+							$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+							$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+							$("#pass02").removeClass("hidden");
+							$("#pass02").text("Unregistered e-mail, please check you have written the e-mail correctly.");
+						}
+						else {
+							$("#correo").attr("class", "form-group has-success has-feedback");
+							$("#contra").attr("class", "form-group has-success has-feedback");
+							$("#pass01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+							$("#email01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+							$("#email02").addClass("hidden"); $("#pass02").addClass("hidden");
+							$("#bienvenido").modal();
+						}
+					});
+				}
+				
+			</script>
 		</div>
+    
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="bienvenido" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header modal-has-success">
+						<h4 class="modal-title">Alert</h4>
+					</div>
+					<div class="modal-body">
+						<p>Welcome to Encrypted Information System (EIS).</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal" onclick="window.location = '../';">
+							Ok.
+						</button>
+					</div>
+				</div>
+			</div>
+    </div>
     
     
     <!-- footer ------------------------------------------------------------------------------------------>

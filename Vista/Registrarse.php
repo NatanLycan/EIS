@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <script type="text/javascript" src="../Scr/jquery-2.2.0.js"></script>
         <script type="text/javascript" src="../Scr/moment.min.js"></script>
+        <script type="text/javascript" src="../Scr/validator.js"></script>
         <script type="text/javascript" src="../Scr/bootstrap.js"></script>
         <script type="text/javascript" src="../Scr/bootstrap-datetimepicker.js"></script>
         <link type="text/css" rel="stylesheet" href="../CSS/bootstrap.css">
@@ -23,7 +24,7 @@
         <nav class="navbar navbar-inverse navbar-static-top" style="height:84px;" id="top-bar">
             <div class="container-fluid" style="padding-left:51px; padding-right:51px;">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href=".">
+                    <a class="navbar-brand" href="../index.php">
                         <img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
                     </a>
                     <div style="padding-top:33px;">
@@ -119,7 +120,7 @@
                         <span id="nombre02" class="text-center help-block hidden"></span>
                     </div>
                 </div>
-                <div class="form-group" id="appaterno">
+                <div class="form-group" id="Appaterno">
                     <label  for="" class="control-label col-md-2">First name</label>
                     <div class="col-md-10">
                         <input type='appaterno' name="appaterno" class='form-control' placeholder="Perez">
@@ -165,35 +166,220 @@
                             <a class='btn btn-success' style='width: 150px; cursor: pointer;' onclick='enviarForm();'>CONTINUE</a>
                         </div>
                     </div>
-                </div>
-                <script>
-                    function enviarForm(){
-                        var nombres = false, correos = false,depas = false;  
-                        //var nombrearea = $("[name='nombrearea']").val();
-                        var nombre = $("[name='nombre']").val();
-                        var appaterno = $("[name='appaterno']").val();
-                        var c1 = $("[name='correo']").val();
-                        var pass = $("[name='pass']").val();
-                        var repass = $("[name='repass']").val();
-                        var key = $("[name='key']").val();
-
-                        // Validando el nombre,apellido paterno y materno                
-                        if (nombre == "" ) {
-                            $("#Nombre").attr("class", "form-group has-feedback has-error");
-                            $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
-                            $("#nombre02").removeClass("hidden");
-                            $("#nombre02").text("El campo nombre no puede estar vacío.");
-                            nombres = false;
-                        }else if(!valname(nombre)){
-                            $("#Nombre").attr("class", "form-group has-feedback has-error");
-                            $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
-                            $("#nombre02").removeClass("hidden");
-                            $("#nombre02").text("El formato del campo nombre  es incorrecto.");                                
-                            nombres = false;
-                        }
-                </script>					   
+                </div>				   
             </form>
+            
+            
+            <!-- JAVA SCRIPT BOTONES-->
+            <script type="text/javascript">
+                function error(donde, str) {
+					$(donde).addClass("has-error has-feedback");
+					$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					if (str != "")
+						$("#pass02").removeClass("hidden");
+					$("#pass02").text(str);
+				}
+
+				function nohayerror() {
+					$("#Nombre").removeClass("has-error has-feedback");
+                    $("#Appaterno").removeClass("has-error has-feedback");
+					$("#Correo").removeClass("has-error has-feedback");
+                    $("#Pass").removeClass("has-error has-feedback");
+                    $("#Repass").removeClass("has-error has-feedback");
+                    $("#Key").removeClass("has-error has-feedback");
+					
+                    $("#nombre01").addClass("hidden");
+                    $("#nombre02").addClass("hidden");
+                    $("#appaterno01").addClass("hidden");
+                    $("#appaterno02").addClass("hidden");
+                    $("#correo01").addClass("hidden");
+                    $("#correo02").addClass("hidden");
+                    $("#pass01").addClass("hidden");
+                    $("#pass02").addClass("hidden");
+                    $("#repass01").addClass("hidden");
+                    $("#repass02").addClass("hidden");
+                    $("#key01").addClass("hidden");
+                    $("#key02").addClass("hidden");
+				}
+                
+				function enviarForm() {
+					var tn = false, tc = false,tp = false,tpc = false,tk = false;  
+                    var nombre = $("[name='nombre']").val();
+                    var appaterno = $("[name='appaterno']").val();
+                    var correo = $("[name='correo']").val();
+                    var pass = $("[name='pass']").val();
+                    var repass = $("[name='repass']").val();
+                    var key = $("[name='key']").val();            
+                    
+                    /* REVISAR SI ALGUN CAMPO ESTA VACIO */
+                    if (nombre == "") {
+						$("#Nombre").attr("class", "form-group has-error has-feedback");
+						$("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#nombre02").removeClass("hidden");
+                        $("#nombre02").text("This field can't be empty.");
+					}else{
+                        if(!valname(nombre)){
+                            $("#Nombre").attr("class", "form-group has-error has-feedback");
+						    $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#nombre02").removeClass("hidden");
+                            $("#nombre02").text("This field doesn't accept numbers.");
+                        }else{
+                            $("#Nombre").attr("class", "form-group has-success has-feedback");
+                            $("#nombre01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#nombre02").addClass("hidden");
+                            tn = true;
+                        }// else formato correcto nombre
+                    }// if vacio
+                    
+                    if (appaterno == "") {
+						$("#Appaterno").attr("class", "form-group has-error has-feedback");
+						$("#appaterno01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#appaterno02").removeClass("hidden");
+                        $("#appaterno02").text("This field can't be empty.");
+					}else{
+                        if(!valname(appaterno)){
+                            $("#Appaterno").attr("class", "form-group has-error has-feedback");
+						    $("#appaterno01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#appaterno02").removeClass("hidden");
+                            $("#appaterno02").text("This field doesn't accept numbers.");
+                        }else{
+                            $("#Appaterno").attr("class", "form-group has-success has-feedback");
+                            $("#appaterno01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#appaterno02").addClass("hidden");
+                            tp = true;
+                        }// else formato correcto apellido paterno
+                    }// if vacio
+                    
+                    if (correo == "") {
+						$("#Correo").attr("class", "form-group has-error has-feedback");
+						$("#correo01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#correo02").removeClass("hidden");
+                        $("#correo02").text("This field can't be empty.");
+					}else{
+                        if(!validate(correo)){
+                            $("#Correo").attr("class", "form-group has-error has-feedback");
+                            $("#correo01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#correo02").removeClass("hidden");
+                            $("#correo02").text("Please enter a valid email. For example,  usuario@dominio.com");
+                        }else{
+                            $("#Correo").attr("class", "form-group has-success has-feedback");
+                            $("#correo01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#correo02").addClass("hidden");
+                            tc = true;
+                        }// else formato correcto email
+                    }// if vacio
+                    
+                    if (pass == "") {
+						$("#Pass").attr("class", "form-group has-error has-feedback");
+						$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#pass02").removeClass("hidden");
+                        $("#pass02").text("This field can't be empty.");
+					}else{
+                        if(!valcontra(pass)){
+                            $("#Pass").attr("class", "form-group has-error has-feedback");
+                            $("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#pass02").removeClass("hidden");
+                            $("#pass02").text("Please enter 6 or more characters. The spaces between characters will be ignored.");
+                        }else{
+                            $("#Pass").attr("class", "form-group has-success has-feedback");
+                            $("#pass01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#pass02").addClass("hidden");
+                            tp = true;
+                        }// else formato correcto contrasean
+                    }// if vacio
+                    
+                    
+                    if (repass == "") {
+						$("#Repass").attr("class", "form-group has-error has-feedback");
+						$("#repass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#repass02").removeClass("hidden");
+                        $("#repass02").text("This field can't be empty.");
+					}else{
+                        if(!valcontra(repass)){
+                            $("#Repass").attr("class", "form-group has-error has-feedback");
+                            $("#repass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#repass02").removeClass("hidden");
+                            $("#repass02").text("Please enter 6 or more characters. The spaces between characters will be ignored.");
+                        }else{
+                            if(pass != repass){
+                                $("#Pass").attr("class", "form-group has-feedback has-error");
+                                $("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");;		
+                                $("#Repass").attr("class", "form-group has-feedback has-error");
+                                $("#repass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                                $("#repass02").removeClass("hidden");
+                                $("#repass02").text("Passwords don't match, please retype your password.");
+                            }else{
+                                $("#Repass").attr("class", "form-group has-success has-feedback");
+                                $("#repass01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                                $("#repass02").addClass("hidden");
+                                tpc = true;
+                            }
+                        }// else formato correcto contrasean
+                    }// if vacio
+                    if (tn && tc && tp && tpc){
+                        
+                                $("#repass02").removeClass("hidden");
+                                $("#repass02").text("Validación.");
+                        
+                        
+                        
+							$.ajax({
+								url: "../Modelo/agrega_cuenta.php",
+								method: "POST",
+								data: { 
+									name: nombre,
+									appat: appaterno,
+									mail: correo,
+									p1: pass
+									//key: cargo
+								}
+							}).done(function(msg) {
+								if(msg == "Insertado") $("#exitoso").modal();
+								console.log(msg);                                
+							});   
+				    }else{
+						$(window).scrollTop(0);
+						$("#error").modal();
+				    }// si los datos del formulario son correctos  
+				}// enviarFOrm		
+			</script>
         </div>
+        
+        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="exitoso" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header modal-has-success">
+						<h4 class="modal-title">Alert</h4>
+					</div>
+					<div class="modal-body">
+						<p>The account has been successfully created.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+								onClick="window.location = 'AdministrarCuentas.php';">
+							Ok
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" data-keyboard="false" id="error" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header modal-has-error">
+						<h4 class="modal-title">Error</h4>
+					</div>
+					<div class="modal-body">
+						<p>Falta al menos un dato obligatorio para efectuar la operación solicitada.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+					</div>
+				</div>
+			</div>
+		</div>		
 
 
         <!-- footer ------------------------------------------------------------------------------------------>

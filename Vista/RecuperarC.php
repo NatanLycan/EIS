@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="../Scr/jquery-2.2.0.js"></script>
 		<script type="text/javascript" src="../Scr/moment.min.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap.js"></script>
+		<script type="text/javascript" src="../Scr/validator.js"></script>
 		<script type="text/javascript" src="../Scr/bootstrap-datetimepicker.js"></script>
 		<link type="text/css" rel="stylesheet" href="../CSS/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../CSS/letras.css">
@@ -23,8 +24,8 @@
    <nav class="navbar navbar-inverse navbar-static-top" style="height:84px;" id="top-bar">
 			<div class="container-fluid" style="padding-left:51px; padding-right:51px;">
 				<div class="navbar-header">
-					<a class="navbar-brand" href=".">
-						<img id="logoSGCE" src="../Img/escomGris.png" width="80px">
+					<a class="navbar-brand" href="../index.php">
+						<img id="logoSGCE" src="../IMG/escomGris.png" width="80px">
 					</a>
 					<div style="padding-top:33px;">
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-bar" aria-expanded="false">
@@ -96,7 +97,7 @@
 						<!--  Visitante -->
 						<li class="">
 							<a href="./IniciarSesion.php">
-								<span><img src="../Img/iniciarsesion.png" height="40px"></span> Sign in
+								<span><img src="../IMG/iniciarsesion.png" height="40px"></span> Sign in
 							</a>
 						</li>
 
@@ -126,11 +127,61 @@
 						<span class="help-block">
                             <a href="Registrarse.php" style="color: #AA1A7F">DON'T HAVE AN ACCOUNT?</a>
 							&nbsp; &nbsp;&nbsp;
-							<a class="btn btn-success" style="width: 150px;" onclick="logIn();">CONTINUE</a>
+							<a class="btn btn-success" style="width: 150px;" onclick="recupera();">CONTINUE</a>
 						</span>
 					</div>
 				</div>
 			</form>
+            
+            <!-- JAVA SCRIPT BOTONES-->
+            <script type="text/javascript">
+                function error(donde, str) {
+					$(donde).addClass("has-error has-feedback");
+					$("#pass01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+					if (str != "")
+						$("#pass02").removeClass("hidden");
+					$("#pass02").text(str);
+				}
+
+				function nohayerror() {
+					$("#correo").removeClass("has-error has-feedback");
+					$("#email01").addClass("hidden");
+				}
+                
+				function recupera() {
+					var tm = false;
+					var mail = $("[name='miemail']").val();
+					
+					/* REVISAR SI ALGUN CAMPO ESTA VACIO */
+                    if (mail == "") {
+						$("#correo").attr("class", "form-group has-error has-feedback");
+						$("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                        $("#email02").removeClass("hidden");
+                        $("#email02").text("This field can't be empty.");
+					}else{
+                        if(!validate(mail)){
+                            $("#correo").attr("class", "form-group has-error has-feedback");
+                            $("#email01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#email02").removeClass("hidden");
+                            $("#email02").text("Please enter a valid email. For example,  usuario@dominio.com");
+                        }else{
+                            $("#correo").attr("class", "form-group has-success has-feedback");
+                            $("#email01").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+                            $("#email02").addClass("hidden");
+                            tm = true;
+                        }// else formato correcto email
+                    }// if vacio
+                    
+                    if (tm) taco();
+					else {
+						$("#error").modal();
+					}  
+                    
+				}//recupera()
+
+				
+			</script>
 		</div>
     
     
