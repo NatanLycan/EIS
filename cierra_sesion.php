@@ -67,7 +67,10 @@
             <div class="jumbotron">
 				<p class='avisos' id="aviso">You have logged out. You will be redirected in 3 seconds. </p>
 				<?php 
-				setcookie("sesion", "", time()-3600);
+				setcookie("id", "", time()-3600);
+                setcookie("first", "", time()-3600);
+                setcookie("name", "", time()-3600);
+                
 
 				header("refresh: 3; url = ./");
 

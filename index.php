@@ -70,7 +70,7 @@
                     <ul class="nav navbar-nav navbar-right" style="padding-top:12px;">
 
                         <?php
-                        if (isset($_COOKIE["sesion"])) {
+                        if (isset($_COOKIE["id"])) {
                         ?>
                         
                         
@@ -131,7 +131,7 @@
                 <!--MARQUESINA CON ANUNCIOS-->
                 <section id="anuncios">
                     <!--ULTIMAS DOS LINEAS PARA EL MARCO CON IMAGENES-->
-                    <img id="ad" src="anuncio.png" calss="img-responsive" width="1000px" height="400px"/>
+                    <img id="ad" src="./IMG/anuncio1.png" calss="img-responsive" width="1000px" height="400px"/>
                 </section>
             </div>
             <div class="row" style="margin-top: 50px; margin-bottom: 20px;">

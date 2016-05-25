@@ -10,6 +10,7 @@
         <script type="text/javascript" src="../Scr/validator.js"></script>
 		<link type="text/css" rel="stylesheet" href="../CSS/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="../CSS/letras.css">
+        <link type="text/css" rel="stylesheet" href="../CSS/modals.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 <body>    
@@ -208,7 +209,7 @@
                         }// else formato correcto contrasean
                     }// if vacio
                     
-                    if (tm && tp) logIn2();
+                    if (tm && tp) {logIn2();}
 					else {
 						$("#error").modal();
 					}  

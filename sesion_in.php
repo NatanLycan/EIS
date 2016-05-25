@@ -16,7 +16,7 @@ if (mysqli_num_rows($usuario) > 0) {
 		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 		//setcookie("cargo", $row["cargo"], time() + 60 * 60 * 24 * 30, "/SGCE");
-		setcookie("sesion", $row["idusuario"], time() + 60 * 60 * 24 * 30, "/EIS");
+		setcookie("id", $row["idusuario"], time() + 60 * 60 * 24 * 30, "/EIS");
 		setcookie("first", 1, time() + 60 * 60 * 24 * 30, "/EIS");
 		setcookie("name", $row["nombre"], time() + 60 * 60 * 24 * 30, "/EIS");
 		
@@ -28,8 +28,7 @@ if (mysqli_num_rows($usuario) > 0) {
 		echo "1";
         
 	}
-}
-else {
+} else {
 	// Cerramos la conexion a la base de datos  
 	include("./Modelo/cierra_conexion.php");
 	echo "2";
