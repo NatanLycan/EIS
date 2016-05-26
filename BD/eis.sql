@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-05-2016 a las 15:23:39
+-- Tiempo de generación: 26-05-2016 a las 15:14:50
 -- Versión del servidor: 10.1.10-MariaDB
 -- Versión de PHP: 7.0.4
 
@@ -29,23 +29,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `archivo` (
   `idarchivo` int(11) NOT NULL,
   `titulo` varchar(45) DEFAULT NULL,
-  `fecha` varchar(10) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `link` varchar(30) DEFAULT NULL,
+  `tamanio` int(11) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
   `idusuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuario`
---
-
-CREATE TABLE `usuario` (
-  `idusuario` int(11) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `apellido` varchar(45) DEFAULT NULL,
-  `correo` varchar(45) DEFAULT NULL,
-  `publica` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -60,12 +48,6 @@ ALTER TABLE `archivo`
   ADD KEY `idusuario` (`idusuario`);
 
 --
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idusuario`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -74,11 +56,6 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `archivo`
   MODIFY `idarchivo` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --

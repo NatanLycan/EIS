@@ -1,4 +1,29 @@
 <!DOCTYPE html>
+<?php
+include_once '../Modelo/config.inc.php';
+if (isset($_POST['subir'])) {
+    $id = $_COOKIE["id"];
+    $nombre = $_FILES['archivo']['name'];
+    $tipo = $_FILES['archivo']['type'];
+    $tamanio = $_FILES['archivo']['size'];
+    $ruta = $_FILES['archivo']['tmp_name'];
+    $destino = "archivos/" . $nombre;
+    if ($nombre != "") {
+        if (copy($ruta, $destino)) {
+            $titulo= $_POST['titulo'];
+            $db=new Conect_MySql();
+            $sql = "INSERT INTO archivo(titulo,fecha,link,tamanio,tipo,idusuario)VALUES('$titulo',curdate(),aes_encrypt('$destino',select aes_decrypt(contrasena,'C1r4l3t1890') from usuario where id='$id'),'$tamanio','$tipo','$id')";
+            $query = $db->execute($sql);
+            if($query){
+                echo "Se guardo correctamente";
+            }
+        } else {
+            echo "Error";
+            //echo $ruta;
+        }
+    }
+}
+?>
 <html>
     <head>    
         <title>EIS</title>
@@ -113,35 +138,32 @@
         <div style="padding-bottom: 57px;" id="main-content" class="container-fluid col-md-offset-1 col-md-10">
             <h2><p><strong>Encrypt file</strong></p></h2>
             <br><br>
-            <form action="" class="form-horizontal">
+            <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
                 <div class="form-group" id="Nombre">
                     <label  for="text" class="control-label col-md-2">Title</label>
                     <div class="col-md-10">                           
-                        <input type='text' name="nombre" class='form-control' placeholder="Cryptography's exam answers">
-                        <span id="nombre01" class="hidden glyphicon form-control-feedback"></span>
-                        <span id="nombre02" class="text-center help-block hidden"></span>
+                        <input type="text" name="titulo" class='form-control' placeholder="Cryptography's exam answers">
                     </div>
                 </div>
                 <div class="form-group" id="File">
                     <label for="file" class="control-label col-md-2">Load file:</label>
                     <div class="col-md-10">
-                        <input type="file" name="archivo" />
-                        <span id="file01" class="hidden glyphicon form-control-feedback"></span>
-                        <span id="file02" class="text-center help-block hidden"></span>
-                        <!-- <input type="submit" name="boton" value="Subir" /> -->
+                        <input type="file" name="archivo"  />
+                        <input type="submit" value="Subir" name="subir" />
                     </div>
                 </div>
 
-                <div class="form-group" >
-                    <div class="form-group text-right">
-                        <div class="col-md-8 col-md-offset-4">
-                            <a class="btn btn-success" style="width: 150px;" onclick="enviarForm();">CONTINUE</a>
-                        </div>
-                    </div>
-                </div>
+                <!-- 
+<div class="form-group" >
+<div class="form-group text-right">
+<div class="col-md-8 col-md-offset-4">
+<a class="btn btn-success" style="width: 150px;" onclick="enviarForm();">CONTINUE</a>
+</div>
+</div>
+</div> -->
                 <!-- JAVA SCRIPT BOTONES-->
                 <script type="text/javascript">
-
+                    /*
 
                     function enviarForm() {
                         var tn = false,tf = false;  
@@ -149,7 +171,7 @@
                         var archivo = $("[name='archivo']").val();
 
 
-                        /* REVISAR SI ALGUN CAMPO ESTA VACIO */
+                        /* REVISAR SI ALGUN CAMPO ESTA VACIO 
                         if (nombre == "") {
                             $("#Nombre").attr("class", "form-group has-error has-feedback");
                             $("#nombre01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
@@ -168,14 +190,22 @@
                                 tn = true;
                             }// else formato correcto nombre
                         }// if vacio
-                        if (archivo == null){
+                        if (archivo == "dory"){
                             $("#File").attr("class", "form-group has-error has-feedback");
                             $("#file01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
                             $("#file02").removeClass("hidden");
-                            $("#file02").text("Please, choose a file.");
+                            $("#file02").text("Please, choose a file 1.");
+
+                        }else if (archivo == ""){
+                            $("#File").attr("class", "form-group has-error has-feedback");
+                            $("#file01").attr("class", "glyphicon glyphicon-remove form-control-feedback");
+                            $("#file02").removeClass("hidden");
+                            $("#file02").text("Please, choose a file 2.");
 
                         }else{
                             $("#File").attr("class", "form-group has-success has-feedback");
+                            $("#file02").removeClass("hidden");
+                            $("#file02").text(archivo);
                             tf = true;
                         }
 
@@ -187,17 +217,20 @@
                             $("#error").modal();
                         }// si los datos del formulario son correctos  
                     }// enviarFOrm	
-                    
-                    
+
+
                     function upup() {
+                        //$("#exitoso").modal();
                         var m = $("[name='nombre']").val();
                         var p = $("[name='archivo']").val();
+                        //$("#exitoso").modal();
                         $.ajax({
                             url: "../Modelo/sube_file.php",
+                            enctype: "multipart/form-data",
                             method: "POST",
                             data: { 
-                                name: m,
-                                archivo: p
+                                nombre : m,
+                                archivo : p
                             }
                         }).done(function(msg) {
                             if(msg == "exito") $("#exitoso").modal();
@@ -205,7 +238,7 @@
                             else if(msg == "error")$("#error").modal();
                             //console.log(msg);                                
                         }); 
-                    }//sube
+                    }//sube*/
                 </script>
             </form>
         </div>
@@ -253,7 +286,7 @@
                         <h4 class="modal-title">Error</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Failed</p>
+                        <p>Fill full </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="window.location = '../Vista/Encrypt.php';">
